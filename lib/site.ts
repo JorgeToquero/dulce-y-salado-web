@@ -11,10 +11,10 @@ export const site = {
     { days: "Domingo", hours: "8:00 – 14:00" },
   ],
   nav: [
-    { label: "Inicio", href: "/#inicio" },
-    { label: "Productos", href: "/#productos" },
-    { label: "Horario", href: "/#horario" },
-    { label: "Ubicación", href: "/#ubicacion" },
+    { label: "Inicio", href: "/" },
+    { label: "Productos", href: "/productos" },
+    { label: "Horario", href: "/horario" },
+    { label: "Ubicación", href: "/ubicacion" },
   ],
   legal: [
     { label: "Aviso legal", href: "/aviso-legal" },

@@ -18,8 +18,8 @@ export function Footer() {
             </span>
           </Link>
           <p className="mt-4 max-w-md text-sm leading-6 text-crema/70">
-            Panadería artesanal de Carmen Hidalgo Sánchez. Dulce y salado,
-            recién hecho cada día en Torrenueva Costa.
+            Despacho de pan y bollería de Carmen Hidalgo Sánchez. Dulce y
+            salado, recién hecho cada día en Torrenueva Costa.
           </p>
         </div>
 

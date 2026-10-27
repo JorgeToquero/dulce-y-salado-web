@@ -1,12 +1,17 @@
 ﻿"use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CroissantLogo, MenuIcon, WhatsAppIcon } from "@/components/icons";
 import { site } from "@/lib/site";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   useEffect(() => {
     if (!open) return;
@@ -41,7 +46,12 @@ export function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="rounded-md text-sm font-semibold text-marron/75 transition-colors hover:text-naranja focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-marron"
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                  className={`rounded-md text-sm font-semibold transition-colors hover:text-naranja focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-marron ${
+                    isActive(item.href)
+                      ? "text-marron underline decoration-naranja decoration-2 underline-offset-8"
+                      : "text-marron/75"
+                  }`}
                 >
                   {item.label}
                 </Link>
@@ -88,8 +98,13 @@ export function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
                   onClick={() => setOpen(false)}
-                  className="block rounded-xl px-3 py-3 text-base font-semibold text-marron transition-colors hover:bg-dorado/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+                  className={`block rounded-xl px-3 py-3 text-base font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron ${
+                    isActive(item.href)
+                      ? "bg-dorado/20 text-marron"
+                      : "text-marron hover:bg-dorado/15"
+                  }`}
                 >
                   {item.label}
                 </Link>

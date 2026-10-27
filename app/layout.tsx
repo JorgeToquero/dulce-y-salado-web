@@ -17,9 +17,9 @@ const nunitoSans = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Dulce y Salado | Panadería artesanal en Torrenueva Costa",
+  title: "Dulce y Salado | Despacho de pan y bollería en Torrenueva Costa",
   description:
-    "Panadería artesanal de Carmen Hidalgo Sánchez en Torrenueva Costa. Dulce y salado, recién hecho cada día.",
+    "Despacho de pan y bollería de Carmen Hidalgo Sánchez en Torrenueva Costa. Dulce y salado, recién hecho cada día.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
