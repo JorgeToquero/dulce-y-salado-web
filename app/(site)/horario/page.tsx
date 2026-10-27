@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { PhoneIcon, WhatsAppIcon } from "@/components/icons";
+import { getSchedule } from "@/sanity/lib/data";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
     "Consulta el horario provisional de Dulce y Salado, despacho de pan y bollería en Torrenueva Costa.",
 };
 
-export default function HorarioPage() {
+export default async function HorarioPage() {
+  const schedule = await getSchedule();
+
   return (
     <main className="flex flex-1 flex-col">
       <PageHero
@@ -37,14 +40,19 @@ export default function HorarioPage() {
           </p>
 
           <dl className="mt-8 divide-y divide-marron/10 border-t border-marron/10">
-            {site.schedule.map((item) => (
+            {schedule.map((item) => (
               <div
-                key={item.days}
+                key={`${item.days}-${item.hours}`}
                 className="flex flex-col gap-1 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
               >
                 <dt className="font-semibold text-marron">{item.days}</dt>
                 <dd className="text-sm text-marron/70 sm:text-base">
-                  {item.hours}
+                  <span>{item.hours}</span>
+                  {item.note ? (
+                    <span className="mt-1 block text-xs text-marron/55">
+                      {item.note}
+                    </span>
+                  ) : null}
                 </dd>
               </div>
             ))}

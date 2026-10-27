@@ -18,6 +18,7 @@ type ConsentSnapshot = ConsentValue | "none" | "loading";
 
 type CookieConsentContextValue = {
   canLoadMap: boolean;
+  isUndecided: boolean;
   acceptAll: () => void;
   rejectAll: () => void;
   acceptMap: () => void;
@@ -115,28 +116,35 @@ export function CookieConsentProvider({
     getConsentSnapshot,
     getServerConsentSnapshot,
   );
-  const pathname = usePathname();
 
   const acceptAll = useCallback(() => updateConsent("accepted"), []);
   const rejectAll = useCallback(() => updateConsent("rejected"), []);
   const acceptMap = useCallback(() => updateConsent("map-accepted"), []);
 
   const canLoadMap = consent === "accepted" || consent === "map-accepted";
-  const showBanner = consent === "none" && !isExcludedPath(pathname);
+  const isUndecided = consent === "none";
 
   const value = useMemo(
-    () => ({ canLoadMap, acceptAll, rejectAll, acceptMap }),
-    [canLoadMap, acceptAll, rejectAll, acceptMap],
+    () => ({ canLoadMap, isUndecided, acceptAll, rejectAll, acceptMap }),
+    [canLoadMap, isUndecided, acceptAll, rejectAll, acceptMap],
   );
 
   return (
     <CookieConsentContext.Provider value={value}>
       {children}
-      {showBanner ? (
-        <CookieBanner onAcceptAll={acceptAll} onReject={rejectAll} />
-      ) : null}
     </CookieConsentContext.Provider>
   );
+}
+
+export function CookieConsentBanner() {
+  const pathname = usePathname();
+  const { isUndecided, acceptAll, rejectAll } = useCookieConsent();
+
+  if (!isUndecided || isExcludedPath(pathname)) {
+    return null;
+  }
+
+  return <CookieBanner onAcceptAll={acceptAll} onReject={rejectAll} />;
 }
 
 export function useCookieConsent() {

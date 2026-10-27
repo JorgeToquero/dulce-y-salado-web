@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHero } from "@/components/page-hero";
 import { WhatsAppIcon } from "@/components/icons";
-import { productCategories } from "@/lib/products";
+import { getProductCategories } from "@/sanity/lib/data";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -11,7 +11,9 @@ export const metadata: Metadata = {
     "Pan, bollería, tortas y dulces, y encargos en Dulce y Salado, despacho de pan y bollería en Torrenueva Costa.",
 };
 
-export default function ProductosPage() {
+export default async function ProductosPage() {
+  const productCategories = await getProductCategories();
+
   return (
     <main className="flex flex-1 flex-col">
       <PageHero

@@ -1,0 +1,4 @@
+{"_type":"category","_id":"category-pan","name":"Pan","slug":{"_type":"slug","current":"pan"},"description":"El básico de cada día, en hogazas, barras y panes especiales.","order":1}
+{"_type":"category","_id":"category-bolleria","name":"Bollería","slug":{"_type":"slug","current":"bolleria"},"description":"Piezas de hojaldre y bollería para desayunos y meriendas.","order":2}
+{"_type":"category","_id":"category-tortas-y-dulces","name":"Tortas y dulces","slug":{"_type":"slug","current":"tortas-y-dulces"},"description":"Tartas, cupcakes y postres para celebrar o darte un capricho.","order":3}
+{"_type":"category","_id":"category-encargos","name":"Encargos","slug":{"_type":"slug","current":"encargos"},"description":"Tartas personalizadas y mesas dulces para tus celebraciones.","order":4}
