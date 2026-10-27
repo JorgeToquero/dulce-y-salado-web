@@ -15,6 +15,7 @@ export const site = {
     { label: "Productos", href: "/productos" },
     { label: "Horario", href: "/horario" },
     { label: "Ubicación", href: "/ubicacion" },
+    { label: "Contacto", href: "/contacto" },
   ],
   legal: [
     { label: "Aviso legal", href: "/aviso-legal" },

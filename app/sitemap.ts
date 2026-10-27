@@ -19,6 +19,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: new URL("/contacto", baseUrl).toString(),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
       url: new URL("/horario", baseUrl).toString(),
       lastModified,
       changeFrequency: "monthly",

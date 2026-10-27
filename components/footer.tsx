@@ -63,6 +63,14 @@ export function Footer() {
                 WhatsApp
               </a>
             </p>
+            <p>
+              <Link
+                href="/contacto"
+                className="rounded-sm font-semibold text-dorado transition-colors hover:text-crema focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dorado"
+              >
+                Formulario de contacto
+              </Link>
+            </p>
           </address>
         </div>
       </div>
