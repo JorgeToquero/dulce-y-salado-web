@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Nunito_Sans } from "next/font/google";
+import { CookieConsentProvider } from "@/components/cookie-consent";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import "./globals.css";
@@ -35,11 +36,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Saltar al contenido
         </a>
-        <Header />
-        <div id="contenido" className="flex flex-1 flex-col">
-          {children}
-        </div>
-        <Footer />
+        <CookieConsentProvider>
+          <Header />
+          <div id="contenido" className="flex flex-1 flex-col">
+            {children}
+          </div>
+          <Footer />
+        </CookieConsentProvider>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCookieConsent } from "@/components/cookie-consent";
 import { MapPinIcon } from "@/components/icons";
 import { site } from "@/lib/site";
 
@@ -9,11 +9,11 @@ const mapSrc = `https://www.google.com/maps?q=${addressQuery}&output=embed`;
 const mapsHref = `https://www.google.com/maps/search/?api=1&query=${addressQuery}`;
 
 export function GoogleMap() {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const { canLoadMap, acceptMap } = useCookieConsent();
 
   return (
     <div className="overflow-hidden rounded-[2rem] border border-marron/10 bg-blanco shadow-sm">
-      {isLoaded ? (
+      {canLoadMap ? (
         <iframe
           title={`Mapa de ${site.name} en ${site.address}`}
           src={mapSrc}
@@ -31,12 +31,12 @@ export function GoogleMap() {
             Mapa de Google
           </h2>
           <p className="mt-3 max-w-sm text-sm leading-6 text-marron/70">
-            El mapa no se carga automáticamente. Pulsa para verlo; al hacerlo,
-            Google puede usar cookies de terceros.
+            El mapa no se carga sin tu consentimiento. Puedes activarlo cuando
+            quieras; al hacerlo, Google puede usar cookies de terceros.
           </p>
           <button
             type="button"
-            onClick={() => setIsLoaded(true)}
+            onClick={acceptMap}
             className="mt-6 rounded-full bg-naranja px-7 py-3 text-sm font-bold text-marron transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-marron"
           >
             Cargar mapa

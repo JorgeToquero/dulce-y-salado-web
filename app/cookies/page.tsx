@@ -42,9 +42,10 @@ export default function CookiesPage() {
         <ul className="list-disc space-y-2 pl-5 marker:text-naranja">
           <li>
             <strong className="font-semibold text-marron">Google Maps:</strong>{" "}
-            el mapa no se carga automáticamente. Se activa solo al pulsar
-            «Cargar mapa». En ese momento, Google puede instalar cookies y tratar
-            datos técnicos como la dirección IP, el dispositivo o la navegación.
+            el mapa no se carga automáticamente. Se activa si aceptas todas las
+            cookies o si pulsas «Cargar mapa». En ese momento, Google puede
+            instalar cookies y tratar datos técnicos como la dirección IP, el
+            dispositivo o la navegación.
           </li>
           <li>
             <strong className="font-semibold text-marron">
@@ -65,15 +66,20 @@ export default function CookiesPage() {
 
       <LegalSection title="4. Consentimiento y control">
         <p>
-          Las cookies no esenciales no se activan automáticamente. El mapa de
-          Google solo se carga después de que pulses el botón correspondiente.
-          Puedes volver a la página sin cargarlo o recargarla para restablecer
-          el estado inicial.
+          En la primera visita se muestra un banner para aceptar o rechazar las
+          cookies no esenciales. El mapa de Google solo se carga si aceptas
+          todas o si pulsas «Cargar mapa». La preferencia se guarda en el
+          almacenamiento local del navegador con la clave{" "}
+          <code className="rounded bg-crema px-1.5 py-0.5 text-xs">
+            cookie-consent
+          </code>
+          .
         </p>
         <p>
-          También puedes bloquear o eliminar cookies desde la configuración de
-          tu navegador. Si bloqueas cookies técnicas, algunas funciones podrían
-          no estar disponibles.
+          Puedes eliminar esa preferencia borrando los datos del sitio desde la
+          configuración de tu navegador. También puedes bloquear o eliminar
+          cookies desde el navegador; si bloqueas cookies técnicas, algunas
+          funciones podrían no estar disponibles.
         </p>
       </LegalSection>
 

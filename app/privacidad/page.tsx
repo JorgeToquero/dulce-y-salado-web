@@ -67,6 +67,14 @@ export default function PrivacidadPage() {
           para su funcionamiento y seguridad, como la dirección IP, la fecha y
           hora de acceso, el navegador utilizado o las páginas solicitadas.
         </p>
+        <p>
+          La preferencia de consentimiento de cookies se guarda localmente en el
+          navegador con la clave{" "}
+          <code className="rounded bg-crema px-1.5 py-0.5 text-xs">
+            cookie-consent
+          </code>
+          .
+        </p>
       </LegalSection>
 
       <LegalSection title="3. Servicios de terceros">
@@ -77,9 +85,9 @@ export default function PrivacidadPage() {
         <ul className="list-disc space-y-2 pl-5 marker:text-naranja">
           <li>
             <strong className="font-semibold text-marron">Google Maps:</strong>{" "}
-            el mapa no se carga automáticamente. Solo se activa si pulsas el
-            botón «Cargar mapa». Al hacerlo, Google puede tratar datos técnicos
-            y utilizar cookies de terceros.
+            el mapa no se carga automáticamente. Se activa si aceptas todas las
+            cookies o si pulsas el botón «Cargar mapa». Al hacerlo, Google puede
+            tratar datos técnicos y utilizar cookies de terceros.
           </li>
           <li>
             <strong className="font-semibold text-marron">
@@ -108,8 +116,8 @@ export default function PrivacidadPage() {
             la web operativa y protegida.
           </li>
           <li>
-            Carga del mapa de Google: consentimiento otorgado al pulsar el botón
-            de carga.
+            Carga del mapa de Google: consentimiento otorgado al aceptar todas
+            las cookies o al pulsar el botón de carga.
           </li>
         </ul>
       </LegalSection>
