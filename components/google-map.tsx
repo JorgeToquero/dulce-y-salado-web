@@ -4,18 +4,21 @@ import { useCookieConsent } from "@/components/cookie-consent";
 import { MapPinIcon } from "@/components/icons";
 import { site } from "@/lib/site";
 
-const addressQuery = encodeURIComponent(site.address);
-const mapSrc = `https://www.google.com/maps?q=${addressQuery}&output=embed`;
-const mapsHref = `https://www.google.com/maps/search/?api=1&query=${addressQuery}`;
+type GoogleMapProps = {
+  address: string;
+};
 
-export function GoogleMap() {
+export function GoogleMap({ address }: GoogleMapProps) {
   const { canLoadMap, acceptMap } = useCookieConsent();
+  const addressQuery = encodeURIComponent(address);
+  const mapSrc = `https://www.google.com/maps?q=${addressQuery}&output=embed`;
+  const mapsHref = `https://www.google.com/maps/search/?api=1&query=${addressQuery}`;
 
   return (
     <div className="overflow-hidden rounded-[2rem] border border-marron/10 bg-blanco shadow-sm">
       {canLoadMap ? (
         <iframe
-          title={`Mapa de ${site.name} en ${site.address}`}
+          title={`Mapa de ${site.name} en ${address}`}
           src={mapSrc}
           className="h-[26rem] w-full border-0 sm:h-[30rem]"
           loading="lazy"

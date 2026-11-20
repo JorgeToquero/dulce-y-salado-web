@@ -1,8 +1,8 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { PhoneIcon, WhatsAppIcon } from "@/components/icons";
-import { getSchedule } from "@/sanity/lib/data";
-import { site } from "@/lib/site";
+import { getSiteContact, getSiteSchedule } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: "Horario | Dulce y Salado",
@@ -10,8 +10,30 @@ export const metadata: Metadata = {
     "Consulta el horario provisional de Dulce y Salado, despacho de pan y bollería en Torrenueva Costa.",
 };
 
-export default async function HorarioPage() {
-  const schedule = await getSchedule();
+export default function HorarioPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex flex-1 flex-col">
+          <div
+            role="status"
+            className="mx-auto w-full max-w-4xl px-4 py-16 text-marron sm:px-6"
+          >
+            Cargando horario…
+          </div>
+        </main>
+      }
+    >
+      <HorarioContent />
+    </Suspense>
+  );
+}
+
+async function HorarioContent() {
+  const [schedule, contact] = await Promise.all([
+    getSiteSchedule(),
+    getSiteContact(),
+  ]);
 
   return (
     <main className="flex flex-1 flex-col">
@@ -67,22 +89,44 @@ export default async function HorarioPage() {
             Llámanos o escríbenos por WhatsApp y te ayudamos con cualquier duda.
           </p>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-            <a
-              href={site.phoneHref}
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-marron/20 px-6 py-3 text-sm font-semibold text-marron transition-colors hover:bg-crema focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
-            >
-              <PhoneIcon className="h-4 w-4" />
-              {site.phoneDisplay}
-            </a>
-            <a
-              href={site.whatsappHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-naranja px-6 py-3 text-sm font-bold text-marron transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
-            >
-              <WhatsAppIcon className="h-4 w-4" />
-              WhatsApp
-            </a>
+            {contact.phoneHref && contact.phone ? (
+              <a
+                href={contact.phoneHref}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-marron/20 px-6 py-3 text-sm font-semibold text-marron transition-colors hover:bg-crema focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+              >
+                <PhoneIcon className="h-4 w-4" />
+                {contact.phone}
+              </a>
+            ) : (
+              <span
+                aria-disabled="true"
+                title="Teléfono próximamente"
+                className="inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-full border border-marron/10 bg-crema/50 px-6 py-3 text-sm font-semibold text-marron/45"
+              >
+                <PhoneIcon className="h-4 w-4" />
+                Teléfono próximamente
+              </span>
+            )}
+            {contact.whatsappHref ? (
+              <a
+                href={contact.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-naranja px-6 py-3 text-sm font-bold text-marron transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+              >
+                <WhatsAppIcon className="h-4 w-4" />
+                WhatsApp
+              </a>
+            ) : (
+              <span
+                aria-disabled="true"
+                title="WhatsApp próximamente"
+                className="inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-full bg-naranja/60 px-6 py-3 text-sm font-bold text-marron/80"
+              >
+                <WhatsAppIcon className="h-4 w-4" />
+                WhatsApp próximamente
+              </span>
+            )}
           </div>
         </div>
       </section>

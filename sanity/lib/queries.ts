@@ -27,3 +27,13 @@ export const scheduleQuery = `
     note
   }
 `;
+
+export const siteSettingsQuery = `
+  *[_type == "siteSettings"] | order(_updatedAt desc)[0] {
+    phone,
+    whatsapp,
+    address,
+    contactEmail,
+    generalSchedule
+  }
+`;

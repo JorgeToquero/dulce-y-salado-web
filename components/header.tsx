@@ -6,7 +6,11 @@ import { useEffect, useState } from "react";
 import { CroissantLogo, MenuIcon, WhatsAppIcon } from "@/components/icons";
 import { site } from "@/lib/site";
 
-export function Header() {
+type HeaderProps = {
+  whatsappHref: string | null;
+};
+
+export function Header({ whatsappHref }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -61,15 +65,26 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <a
-            href={site.whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden items-center gap-2 rounded-full bg-naranja px-5 py-2.5 text-sm font-bold text-marron transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron sm:inline-flex"
-          >
-            <WhatsAppIcon className="h-4 w-4" />
-            WhatsApp
-          </a>
+          {whatsappHref ? (
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden items-center gap-2 rounded-full bg-naranja px-5 py-2.5 text-sm font-bold text-marron transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron sm:inline-flex"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+              WhatsApp
+            </a>
+          ) : (
+            <span
+              aria-disabled="true"
+              title="WhatsApp próximamente"
+              className="hidden cursor-not-allowed items-center gap-2 rounded-full bg-naranja/60 px-5 py-2.5 text-sm font-bold text-marron/80 sm:inline-flex"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+              WhatsApp próximamente
+            </span>
+          )}
 
           <button
             type="button"
@@ -112,16 +127,27 @@ export function Header() {
             ))}
           </ul>
 
-          <a
-            href={site.whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
-            className="mt-4 flex items-center justify-center gap-2 rounded-full bg-naranja px-5 py-3 text-sm font-bold text-marron transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
-          >
-            <WhatsAppIcon className="h-4 w-4" />
-            EscrÃ­benos por WhatsApp
-          </a>
+          {whatsappHref ? (
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="mt-4 flex items-center justify-center gap-2 rounded-full bg-naranja px-5 py-3 text-sm font-bold text-marron transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+              Escríbenos por WhatsApp
+            </a>
+          ) : (
+            <span
+              aria-disabled="true"
+              title="WhatsApp próximamente"
+              className="mt-4 flex cursor-not-allowed items-center justify-center gap-2 rounded-full bg-naranja/60 px-5 py-3 text-sm font-bold text-marron/80"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+              WhatsApp próximamente
+            </span>
+          )}
         </nav>
       </div>
     </header>

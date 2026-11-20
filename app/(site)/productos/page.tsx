@@ -1,9 +1,10 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHero } from "@/components/page-hero";
 import { WhatsAppIcon } from "@/components/icons";
 import { getProductCategories } from "@/sanity/lib/data";
-import { site } from "@/lib/site";
+import { getSiteContact } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: "Productos | Dulce y Salado",
@@ -11,8 +12,30 @@ export const metadata: Metadata = {
     "Pan, bollería, tortas y dulces, y encargos en Dulce y Salado, despacho de pan y bollería en Torrenueva Costa.",
 };
 
-export default async function ProductosPage() {
-  const productCategories = await getProductCategories();
+export default function ProductosPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex flex-1 flex-col">
+          <div
+            role="status"
+            className="mx-auto w-full max-w-6xl px-4 py-16 text-marron sm:px-6"
+          >
+            Cargando productos…
+          </div>
+        </main>
+      }
+    >
+      <ProductosContent />
+    </Suspense>
+  );
+}
+
+async function ProductosContent() {
+  const [productCategories, contact] = await Promise.all([
+    getProductCategories(),
+    getSiteContact(),
+  ]);
 
   return (
     <main className="flex flex-1 flex-col">
@@ -67,7 +90,7 @@ export default async function ProductosPage() {
                     <div className="relative aspect-[4/3] overflow-hidden">
                       <Image
                         src={product.image}
-                        alt={`${product.name} de ${site.name}`}
+                        alt={`${product.name} de Dulce y Salado`}
                         fill
                         sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -95,15 +118,26 @@ export default async function ProductosPage() {
           <p className="mx-auto mt-3 max-w-xl text-base leading-7 text-crema/80">
             Cuéntanos qué necesitas y te ayudamos con tu encargo.
           </p>
-          <a
-            href={site.whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-7 inline-flex items-center justify-center gap-2 rounded-full bg-naranja px-7 py-4 text-sm font-bold text-marron transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dorado sm:text-base"
-          >
-            <WhatsAppIcon className="h-5 w-5" />
-            Pedir por WhatsApp
-          </a>
+          {contact.whatsappHref ? (
+            <a
+              href={contact.whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-7 inline-flex items-center justify-center gap-2 rounded-full bg-naranja px-7 py-4 text-sm font-bold text-marron transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dorado sm:text-base"
+            >
+              <WhatsAppIcon className="h-5 w-5" />
+              Pedir por WhatsApp
+            </a>
+          ) : (
+            <span
+              aria-disabled="true"
+              title="WhatsApp próximamente"
+              className="mt-7 inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-full bg-naranja/60 px-7 py-4 text-sm font-bold text-marron/80 sm:text-base"
+            >
+              <WhatsAppIcon className="h-5 w-5" />
+              WhatsApp próximamente
+            </span>
+          )}
         </aside>
       </div>
     </main>

@@ -3,9 +3,11 @@ import Link from "next/link";
 import croissants from "@/public/images/obrador-croissants.jpg";
 import heroBread from "@/public/images/hero-pan.jpg";
 import { PhoneIcon, WhatsAppIcon } from "@/components/icons";
-import { site } from "@/lib/site";
+import { getSiteContact } from "@/lib/site-content";
 
-export default function Home() {
+export default async function Home() {
+  const contact = await getSiteContact();
+
   return (
     <main className="flex flex-1 flex-col">
       <section
@@ -39,22 +41,44 @@ export default function Home() {
           </p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a
-              href={site.whatsappHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-naranja px-7 py-4 text-sm font-semibold text-marron shadow-sm transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dorado sm:text-base"
-            >
-              <WhatsAppIcon className="h-5 w-5" />
-              Pedir por WhatsApp
-            </a>
-            <a
-              href={site.phoneHref}
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-crema/40 px-7 py-4 text-sm font-semibold text-crema transition-colors hover:bg-crema hover:text-marron focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dorado sm:text-base"
-            >
-              <PhoneIcon className="h-5 w-5" />
-              {site.phoneDisplay}
-            </a>
+            {contact.whatsappHref ? (
+              <a
+                href={contact.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-naranja px-7 py-4 text-sm font-semibold text-marron shadow-sm transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dorado sm:text-base"
+              >
+                <WhatsAppIcon className="h-5 w-5" />
+                Pedir por WhatsApp
+              </a>
+            ) : (
+              <span
+                aria-disabled="true"
+                title="WhatsApp próximamente"
+                className="inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-full bg-naranja/60 px-7 py-4 text-sm font-semibold text-marron sm:text-base"
+              >
+                <WhatsAppIcon className="h-5 w-5" />
+                WhatsApp próximamente
+              </span>
+            )}
+            {contact.phoneHref && contact.phone ? (
+              <a
+                href={contact.phoneHref}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-crema/40 px-7 py-4 text-sm font-semibold text-crema transition-colors hover:bg-crema hover:text-marron focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dorado sm:text-base"
+              >
+                <PhoneIcon className="h-5 w-5" />
+                {contact.phone}
+              </a>
+            ) : (
+              <span
+                aria-disabled="true"
+                title="Teléfono próximamente"
+                className="inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-full border border-crema/40 px-7 py-4 text-sm font-semibold text-crema/70 sm:text-base"
+              >
+                <PhoneIcon className="h-5 w-5" />
+                Teléfono próximamente
+              </span>
+            )}
           </div>
         </div>
       </section>
@@ -97,7 +121,7 @@ export default function Home() {
             para que llegue a tu mesa en su mejor momento.
           </p>
           <p className="mt-4 max-w-xl text-base leading-7 text-marron/75 sm:text-lg sm:leading-8">
-            Carmen Hidalgo Sánchez te espera en Torrenueva Costa con una
+             Te esperamos  con una
             selección dulce y salada para compartir.
           </p>
 
@@ -113,15 +137,26 @@ export default function Home() {
           </ul>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a
-              href={site.whatsappHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-marron px-7 py-4 text-sm font-semibold text-crema transition-colors hover:bg-naranja hover:text-marron focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-marron sm:text-base"
-            >
-              <WhatsAppIcon className="h-5 w-5" />
-              Hablemos por WhatsApp
-            </a>
+            {contact.whatsappHref ? (
+              <a
+                href={contact.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-marron px-7 py-4 text-sm font-semibold text-crema transition-colors hover:bg-naranja hover:text-marron focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-marron sm:text-base"
+              >
+                <WhatsAppIcon className="h-5 w-5" />
+                Hablemos por WhatsApp
+              </a>
+            ) : (
+              <span
+                aria-disabled="true"
+                title="WhatsApp próximamente"
+                className="inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-full bg-marron/60 px-7 py-4 text-sm font-semibold text-crema sm:text-base"
+              >
+                <WhatsAppIcon className="h-5 w-5" />
+                WhatsApp próximamente
+              </span>
+            )}
             <Link
               href="/productos"
               className="inline-flex items-center justify-center rounded-full border border-marron/20 px-7 py-4 text-sm font-semibold text-marron transition-colors hover:bg-blanco focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-marron sm:text-base"

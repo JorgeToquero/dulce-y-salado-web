@@ -6,7 +6,7 @@ import {
   WhatsAppIcon,
 } from "@/components/icons";
 import { PageHero } from "@/components/page-hero";
-import { site } from "@/lib/site";
+import { getSiteContact } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: "Ubicación | Dulce y Salado",
@@ -14,7 +14,9 @@ export const metadata: Metadata = {
     "Encuentra Dulce y Salado en C/ Acera del Mar 66, Torrenueva Costa.",
 };
 
-export default function UbicacionPage() {
+export default async function UbicacionPage() {
+  const contact = await getSiteContact();
+
   return (
     <main className="flex flex-1 flex-col">
       <PageHero
@@ -33,34 +35,56 @@ export default function UbicacionPage() {
             Dirección
           </h2>
           <address className="mt-2 text-base not-italic leading-7 text-marron/75">
-            {site.address}
+            {contact.address}
           </address>
 
           <h3 className="mt-8 text-xs font-bold uppercase tracking-[0.25em] text-marron/60">
             Contacto
           </h3>
           <p className="mt-3">
-            <a
-              href={site.phoneHref}
-              className="inline-flex items-center gap-2 rounded-sm text-base font-semibold text-marron transition-colors hover:text-naranja focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
-            >
-              <PhoneIcon className="h-5 w-5" />
-              {site.phoneDisplay}
-            </a>
+            {contact.phoneHref && contact.phone ? (
+              <a
+                href={contact.phoneHref}
+                className="inline-flex items-center gap-2 rounded-sm text-base font-semibold text-marron transition-colors hover:text-naranja focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+              >
+                <PhoneIcon className="h-5 w-5" />
+                {contact.phone}
+              </a>
+            ) : (
+              <span
+                aria-disabled="true"
+                title="Teléfono próximamente"
+                className="inline-flex cursor-not-allowed items-center gap-2 rounded-sm text-base font-semibold text-marron/45"
+              >
+                <PhoneIcon className="h-5 w-5" />
+                Teléfono próximamente
+              </span>
+            )}
           </p>
 
-          <a
-            href={site.whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-naranja px-6 py-3 text-sm font-bold text-marron transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
-          >
-            <WhatsAppIcon className="h-4 w-4" />
-            Pedir por WhatsApp
-          </a>
+          {contact.whatsappHref ? (
+            <a
+              href={contact.whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-naranja px-6 py-3 text-sm font-bold text-marron transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+              Pedir por WhatsApp
+            </a>
+          ) : (
+            <span
+              aria-disabled="true"
+              title="WhatsApp próximamente"
+              className="mt-6 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full bg-naranja/60 px-6 py-3 text-sm font-bold text-marron/80"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+              WhatsApp próximamente
+            </span>
+          )}
         </div>
 
-        <GoogleMap />
+        <GoogleMap address={contact.address} />
       </section>
     </main>
   );

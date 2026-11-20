@@ -8,6 +8,7 @@ import {
   productCategoriesQuery,
   productsQuery,
   scheduleQuery,
+  siteSettingsQuery,
 } from "./queries";
 
 type SanityCategory = {
@@ -100,5 +101,29 @@ export async function getSchedule(): Promise<ScheduleItem[]> {
     return items.length > 0 ? items : site.schedule;
   } catch {
     return site.schedule;
+  }
+}
+
+export type SiteSettings = {
+  phone: string | null;
+  whatsapp: string | null;
+  address: string | null;
+  contactEmail: string | null;
+  generalSchedule: string | null;
+};
+
+export async function getSiteSettings(): Promise<SiteSettings | null> {
+  if (!client) {
+    return null;
+  }
+
+  try {
+    const settings = await client.fetch<SiteSettings | null>(
+      siteSettingsQuery,
+    );
+
+    return settings;
+  } catch {
+    return null;
   }
 }

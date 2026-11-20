@@ -5,8 +5,14 @@ import {
 } from "@/components/cookie-consent";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { getSiteContact, getSiteSchedule } from "@/lib/site-content";
 
-export default function SiteLayout({ children }: LayoutProps<"/">) {
+export default async function SiteLayout({ children }: LayoutProps<"/">) {
+  const [contact, schedule] = await Promise.all([
+    getSiteContact(),
+    getSiteSchedule(),
+  ]);
+
   return (
     <>
       <a
@@ -16,11 +22,17 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
         Saltar al contenido
       </a>
       <CookieConsentProvider>
-        <Header />
+        <Header whatsappHref={contact.whatsappHref} />
         <div id="contenido" className="flex flex-1 flex-col">
           {children}
         </div>
-        <Footer />
+        <Footer
+          address={contact.address}
+          phoneDisplay={contact.phone}
+          phoneHref={contact.phoneHref}
+          whatsappHref={contact.whatsappHref}
+          schedule={schedule}
+        />
         <Suspense fallback={null}>
           <CookieConsentBanner />
         </Suspense>

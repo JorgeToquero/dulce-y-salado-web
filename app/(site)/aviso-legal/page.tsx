@@ -32,12 +32,13 @@ export default function AvisoLegalPage() {
           <dd>{site.address}</dd>
           <dt className="font-semibold text-marron">Teléfono</dt>
           <dd>
-            <a
-              href={site.phoneHref}
-              className="rounded-sm underline underline-offset-4 hover:text-naranja focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+            <span
+              aria-disabled="true"
+              title="Teléfono próximamente"
+              className="cursor-not-allowed text-marron/60"
             >
-              {site.phoneDisplay}
-            </a>
+              Teléfono próximamente
+            </span>
           </dd>
           <dt className="font-semibold text-marron">NIF/CIF</dt>
           <dd className="text-marron/60">

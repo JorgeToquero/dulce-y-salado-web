@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
 import { MapPinIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
 import { PageHero } from "@/components/page-hero";
-import { site } from "@/lib/site";
+import { getSiteContact, getSiteSchedule } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: "Contacto | Dulce y Salado",
@@ -11,7 +11,12 @@ export const metadata: Metadata = {
     "Contacta con Dulce y Salado en Torrenueva Costa por WhatsApp, teléfono o formulario. Consulta la dirección y el horario provisional.",
 };
 
-export default function ContactoPage() {
+export default async function ContactoPage() {
+  const [contact, schedule] = await Promise.all([
+    getSiteContact(),
+    getSiteSchedule(),
+  ]);
+
   return (
     <main className="flex flex-1 flex-col">
       <PageHero
@@ -30,24 +35,46 @@ export default function ContactoPage() {
               La forma más rápida de resolver una duda o hacer un encargo.
             </p>
 
-            <a
-              href={site.whatsappHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-naranja px-6 py-3.5 text-sm font-bold text-marron transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dorado sm:text-base"
-            >
-              <WhatsAppIcon className="h-5 w-5" />
-              Escribir por WhatsApp
-              <span className="sr-only"> (se abre en una nueva pestaña)</span>
-            </a>
+            {contact.whatsappHref ? (
+              <a
+                href={contact.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-naranja px-6 py-3.5 text-sm font-bold text-marron transition-colors hover:bg-dorado focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dorado sm:text-base"
+              >
+                <WhatsAppIcon className="h-5 w-5" />
+                Escribir por WhatsApp
+                <span className="sr-only"> (se abre en una nueva pestaña)</span>
+              </a>
+            ) : (
+              <span
+                aria-disabled="true"
+                title="WhatsApp próximamente"
+                className="mt-6 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full bg-naranja/60 px-6 py-3.5 text-sm font-bold text-marron/80 sm:text-base"
+              >
+                <WhatsAppIcon className="h-5 w-5" />
+                WhatsApp próximamente
+              </span>
+            )}
 
-            <a
-              href={site.phoneHref}
-              className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-crema/25 px-6 py-3.5 text-sm font-semibold text-crema transition-colors hover:border-dorado hover:text-dorado focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dorado sm:text-base"
-            >
-              <PhoneIcon className="h-5 w-5" />
-              {site.phoneDisplay}
-            </a>
+            {contact.phoneHref && contact.phone ? (
+              <a
+                href={contact.phoneHref}
+                className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-crema/25 px-6 py-3.5 text-sm font-semibold text-crema transition-colors hover:border-dorado hover:text-dorado focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dorado sm:text-base"
+              >
+                <PhoneIcon className="h-5 w-5" />
+                {contact.phone}
+              </a>
+            ) : (
+              <span
+                aria-disabled="true"
+                title="Teléfono próximamente"
+                className="mt-3 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full border border-crema/25 px-6 py-3.5 text-sm font-semibold text-crema/45 sm:text-base"
+              >
+                <PhoneIcon className="h-5 w-5" />
+                Teléfono próximamente
+              </span>
+            )}
           </div>
 
           <div className="rounded-[2rem] border border-marron/10 bg-blanco p-6 shadow-sm sm:p-8">
@@ -59,7 +86,7 @@ export default function ContactoPage() {
               Dirección
             </h2>
             <address className="mt-2 text-base not-italic leading-7 text-marron/75">
-              {site.address}
+              {contact.address}
             </address>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -76,7 +103,7 @@ export default function ContactoPage() {
             </div>
 
             <dl className="mt-4 divide-y divide-marron/10 border-t border-marron/10">
-              {site.schedule.map((item) => (
+              {schedule.map((item) => (
                 <div
                   key={item.days}
                   className="flex flex-col gap-1 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"

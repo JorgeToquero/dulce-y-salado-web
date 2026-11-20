@@ -29,14 +29,46 @@
 - No registrar credenciales, tokens ni valores de entorno en el repositorio ni
   en este diario.
 - No configurar todavía despliegue, dominio, webhooks ni servicios externos.
+- Gestionar las categorías de productos (Pan, Bollería, Tortas y dulces, Encargos) en Sanity.
 
 ### Pendientes
 
 - Configurar el proyecto y el dataset de Sanity, los permisos CORS y las
   credenciales necesarias en el entorno local.
-- Importar las categorías iniciales y completar el contenido desde Studio.
+- Preparar una importación idempotente de categorías iniciales (Pan, Bollería,
+  Tortas y dulces y Encargos).
+- Importar y completar el contenido desde Studio (importación no ejecutada aún;
+  sin documentos creados en Sanity).
 - Probar `/studio`, `/productos` y `/horario` con datos reales publicados.
 - Completar los datos legales pendientes y confirmar el horario definitivo.
 - Definir el envío real del formulario de contacto.
 - Revisar los avisos de peer dependencies detectados durante la instalación.
+- Revisar la optimización de las imágenes de productos procedentes de Sanity
+  (pendiente para más adelante): dimensiones, calidad, formatos modernos
+  (WebP/AVIF) y uso de Sanity o `next/image`.
+- Comprobar la implementación existente de imágenes antes de hacer cambios. No
+  dar esta tarea por completada.
 - Preparar el despliegue y la configuración del dominio.
+
+## 20 de noviembre de 2026
+
+### Avances
+
+- Comprobada la lectura de productos reales publicados en Sanity:
+  Pan de Pueblo y Caña de chocolate.
+- Verificado que una modificación de la descripción publicada
+  en Sanity se refleja en la web.
+- Comprobada la aparición de productos en las categorías
+  Pan y Bollería.
+- Añadido un límite de Suspense en la página de productos,
+  moviendo la consulta a un componente asíncrono hijo.
+- Tras guardar y recargar, los productos cargan correctamente
+  y desaparece el indicador del aviso Blocking Route.
+- Conservada sin cambios la lógica de reserva local.
+
+### Pendientes
+
+- Ejecutar de nuevo build, lint y TypeScript tras el cambio.
+- Probar /horario con datos reales publicados.
+- Comprobar los casos de reserva local.
+- Mantener los demás pendientes de la entrada anterior.
