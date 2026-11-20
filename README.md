@@ -1,8 +1,6 @@
 # Dulce y Salado
 
-Despacho de pan y bollería de Carmen Hidalgo Sánchez en Torrenueva Costa.
-
-Proyecto base construido con Next.js (App Router), TypeScript y Tailwind CSS.
+Dulce y Salado — Web informativa para un despacho de pan y bollería en Torrenueva Costa. Desarrollada con Next.js, TypeScript, Tailwind CSS y Sanity CMS. Incluye gestión de productos, horarios, ubicación y contenidos desde un CMS.
 
 ## Desarrollo
 
