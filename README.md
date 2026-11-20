@@ -1,7 +1,6 @@
 # Dulce y Salado
 
-Dulce y Salado — Web informativa para un despacho de pan y bollería en Torrenueva Costa. Desarrollada con Next.js, TypeScript, Tailwind CSS y Sanity CMS. Incluye gestión de productos, horarios, ubicación y contenidos desde un CMS.
-
+Dulce y Salado — Web informativa para un despacho de pan y bollería en Torrenueva Costa. Next.js, TypeScript, Tailwind CSS y Sanity CMS. Gestión de productos, horarios, ubicación y contenidos desde un CMS.
 ## Desarrollo
 
 ```bash
